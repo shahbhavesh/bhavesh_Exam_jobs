@@ -1,0 +1,1 @@
+http://127.0.0.1:8081/artifactory/libs-snapshot-local/com/qaagility/CounterWebApp/1.0-SNAPSHOT/CounterWebApp-1.0-20180412.063442-27.war

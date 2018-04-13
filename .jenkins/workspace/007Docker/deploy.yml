@@ -1,0 +1,18 @@
+---
+- hosts: localhost
+  tasks:
+          - name: Define variable in task.
+            shell: read -r BUILD_LATEST < filename.txt &&  echo $BUILD_LATEST
+            register : BUILD_LATEST
+          - debug:
+              var: BUILD_LATEST.stdout_lines[0]
+          - file:
+             path: /home/devops/Downloads/apache-tomcat-9.0.1/webapps/HelloWorldJavaEE
+             state: absent
+             name: "remove existing extracted war"
+          - get_url:
+             dest: /home/devops/Downloads/apache-tomcat-9.0.1/webapps/HelloWorldJavaEE.war
+             force: true
+             url: "{{ BUILD_LATEST.stdout_lines[0]}}"
+          - name: Copy the build to the docker staging server (container id) 269acc79fdb7
+            shell: sudo docker cp /home/devops/Downloads/apache-tomcat-9.0.1/webapps/HelloWorldJavaEE.war 525041e8afa2:/usr/local/tomcat/webapps
